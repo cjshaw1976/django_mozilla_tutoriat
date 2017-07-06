@@ -20,6 +20,19 @@ class Genre(models.Model):
         return self.name
 
 
+class Language(models.Model):
+    """
+    Model representing a book language (e.g. English, French).
+    """
+    name = models.CharField(max_length=200, help_text="Enter a book genre (e.g. English, French etc.)")
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.name
+
+
 class Book(models.Model):
     """
     Model representing a book (but not a specific copy of a book).
@@ -29,6 +42,7 @@ class Book(models.Model):
     summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
     isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         """
@@ -72,7 +86,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ["due_back"]
-        permissions = (("can_mark_returned", "Set book as returned"),) 
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
 
     def __str__(self):
