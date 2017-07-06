@@ -17,4 +17,10 @@
     <li><strong>Genres:</strong> {{ num_genre }}</li>
   </ul>
 
+  <p>{% if visit.num > 0 %}
+    You have visited this page {{ visit.num }} time{{ visit.num|pluralize }}, your last visit was {{ visit.last }} (CAT).
+  {% else %}
+    Welcome, this is your first visit
+  {% endif %}</p>
+
 {% endblock %}
